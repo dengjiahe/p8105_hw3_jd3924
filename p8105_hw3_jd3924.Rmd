@@ -85,13 +85,21 @@ accel_data =
   mutate(activity_min = as.numeric(activity_min))
 accel_data
 ```
+The accelerometer data has `r nrow(accel_data)` rows and `r ncol(accel_data)` columns.
+The variable week tells the which week that the accelerometer data is being collected. 
+The variable day_id tells which day that the accelerometer data is being collected.
+The variable weekday_weekend tells they day is whether weekday or weekend.
+The variable activity_min count the activity in minutes.
+The variable amount_of_activity tells the amount of activity have been done.
+
 ```{r}
 accel_data %>%
   summarize(total_activity = sum(amount_of_activity)) %>%
   knitr::kable(digits = 1)
   
 ```
-
+From the table above we can see that the two lowest activity amount, which is 1440.
+both happened in Saturday, and almost is the end of the data collection.
 ```{r}
 accel_data %>%
   ggplot(aes(x = activity_min,y = amount_of_activity,color = day)) +
@@ -109,6 +117,9 @@ accel_data %>%
     limits = c(0, 1440))
 
 ```
+From the plot above, we can see that during normal bedtime, from 10:00pm to 6:00am, the activity amount is low, which is reasonable.Also, we can see that after a high activity, there always have a rest period after. And the high activity most happens in the morning, and before bedtime. 
+During afternoon, the activity is in a normal range. 
+And. the day that have the most activity is on Wednesday. 
 #Problem 3
 ```{r}
 library(p8105.datasets)
@@ -156,6 +167,7 @@ ny_noaa_df %>%
 ```{r}
 temp_max_min = 
   ny_noaa_df %>%
+  drop_na() %>%
   ggplot(aes(x = tmin, y = tmax)) +
   geom_smooth(se = FALSE)+
   labs(
