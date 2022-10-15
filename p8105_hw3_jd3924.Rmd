@@ -153,5 +153,15 @@ ny_noaa_df %>%
   facet_grid(. ~ month)
   
 ```
+```{r}
+ny_noaa_df %>%
+  ggplot(aes(x = tmin, y = tmax)) +
+  geom_smooth(se = FALSE)+
+  labs(
+    title = "Maximum Temperature vs. Minimum Temperature in NY",
+    x = "Minimum Temperature in degree Celcius",
+    y = "Maximum Temp in degree celcius") + 
+  theme(legend.position = "bottom")
+```
 
 
