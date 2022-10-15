@@ -154,7 +154,8 @@ ny_noaa_df %>%
   
 ```
 ```{r}
-ny_noaa_df %>%
+temp_max_min = 
+  ny_noaa_df %>%
   ggplot(aes(x = tmin, y = tmax)) +
   geom_smooth(se = FALSE)+
   labs(
@@ -164,7 +165,8 @@ ny_noaa_df %>%
   theme(legend.position = "bottom")
 ```
 ```{r}
-ny_noaa_df %>%
+snowfall_dist = 
+  ny_noaa_df %>%
   filter(snow > 0, snow < 100) %>% 
   mutate(year = as.factor(year)) %>%
   ggplot(aes(x = snow, y = year, fill = year)) +
@@ -175,5 +177,8 @@ ny_noaa_df %>%
     title = "The Distribution of Snowfall in New York") +
   theme(legend.position = "none")
 ```
-
+```{r}
+library(patchwork)
+temp_max_min + snowfall_dist 
+```
 
