@@ -125,12 +125,33 @@ ny_noaa_df=
     prcp = prcp / 10,
     tmax = tmax / 10,
     tmin = tmin / 10,
-    month=month.abb[.$month]) %>%
-  select(year,month,day,everything())
+    month=month.abb[.$month])
 ny_noaa_df
 ```
 ```{r}
+ny_noaa_df %>%
+  group_by(snow) %>%
+  summarize(count = n()) %>%
+  arrange(desc(count))
+```
 
+```{r}
+ny_noaa_df %>%
+  filter(month %in% c("Jan", "Jul")) %>%
+  group_by(year,month,id) %>%
+  summarize(avg_tmax = mean(tmax, na.rm = TRUE)) %>%
+  ggplot(aes(x = year, y = avg_tmax, color = month)) +
+  geom_point() +geom_smooth(alpha = 0.5) +
+  labs(
+    x = "year",
+    y = "temperature in degree celcius",
+    title = "New York Each Stations'Average Max Temperature in January and in July",
+    caption = "Data from the ny_noaa dataset")+
+  theme(legend.position = "bottom")+
+  scale_x_continuous(
+    breaks = c(1980, 1985, 1990, 1995, 2000, 2005, 2010))+
+  facet_grid(. ~ month)
+  
 ```
 
 
