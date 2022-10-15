@@ -16,16 +16,28 @@ accel_data =
   janitor::clean_names() %>%
   mutate(weekday_weekend= ifelse (day %in% c("Saturday","Sunday"), "weekdend", "weekday")) %>%
   select(week,day_id,day,weekday_weekend,everything()) %>%
-  group_by(week)
-accel_data
-  
-```
-%>%
+  group_by(day_id) %>%
   pivot_longer(
     activity_1:activity_1440,
-    names_to = "activity",
-    values_to = "total_act",
-    names_prefix = "activity_" )
+    names_to = "activity_per_day",
+    values_to = "amount_of_activity",
+    names_prefix = "activity_"
+  ) %>%
+  summarize(total_activity = sum(amount_of_activity)) %>%
+  knitr::kable(digits = 1)
+accel_data
+```
+
+```{r}
+library(p8105.datasets)
+problem3 = data("ny_noaa")
+
+problem3
+
+
+
+```
+
 
 
 
