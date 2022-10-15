@@ -118,10 +118,19 @@ data("ny_noaa")
 ny_noaa_df= 
   ny_noaa %>%
   janitor::clean_names() %>%
-  separate(date,into = c("year","month","day"),sep = "-",convert = TRUE)
-
+  separate(date,into = c("year","month","day"),sep = "-",convert = TRUE) %>%
+  mutate(
+    tmax = as.numeric(tmax),
+    tmin = as.numeric(tmin),
+    prcp = prcp / 10,
+    tmax = tmax / 10,
+    tmin = tmin / 10,
+    month=month.abb[.$month]) %>%
+  select(year,month,day,everything())
 ny_noaa_df
-
-  
 ```
+```{r}
+
+```
+
 
