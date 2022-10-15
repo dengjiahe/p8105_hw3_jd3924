@@ -16,28 +16,38 @@ accel_data =
   janitor::clean_names() %>%
   mutate(weekday_weekend= ifelse (day %in% c("Saturday","Sunday"), "weekdend", "weekday")) %>%
   select(week,day_id,day,weekday_weekend,everything()) %>%
-  group_by(day_id) %>%
+  group_by(day_id,day) %>%
   pivot_longer(
     activity_1:activity_1440,
-    names_to = "activity_per_day",
+    names_to = "activity_min",
     values_to = "amount_of_activity",
-    names_prefix = "activity_"
-  ) %>%
-  summarize(total_activity = sum(amount_of_activity)) %>%
-  knitr::kable(digits = 1)
+    names_prefix = "activity_")  %>%
+  mutate(activity_min = as.numeric(activity_min))
 accel_data
 ```
-
 ```{r}
-library(p8105.datasets)
-problem3 = data("ny_noaa")
-
-problem3
-
-
-
+accel_data %>%
+  summarize(total_activity = sum(amount_of_activity)) %>%
+  knitr::kable(digits = 1)
+  
 ```
 
 
 
+```{r}
+accel_data %>%
+  ggplot(aes(x = activity_min,y = amount_of_activity,color = day)) +
+  geom_line()+
+  labs(
+    x = "Time / Day",
+    y = "Amoung of Activity",
+    title = "The Plot of Activity Time Courses for Each Day",
+    caption = "Data from the accel_data.csv"
+    )+
+  theme(legend.position = "bottom")+
+  scale_x_continuous(
+    breaks = c(0,360,720,1080,1440),
+    labels = c("0:00am", "6:00am", "12:00pm", "6:00pm", "24:00pm"),
+    limits = c(0, 1440))
 
+```
