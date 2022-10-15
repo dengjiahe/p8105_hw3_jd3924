@@ -163,5 +163,17 @@ ny_noaa_df %>%
     y = "Maximum Temp in degree celcius") + 
   theme(legend.position = "bottom")
 ```
+```{r}
+ny_noaa_df %>%
+  filter(snow > 0, snow < 100) %>% 
+  mutate(year = as.factor(year)) %>%
+  ggplot(aes(x = snow, y = year, fill = year)) +
+  geom_density_ridges_gradient(alpha = 0.5) +
+  labs(
+    x = "snowfall in mm",
+    y = "year",
+    title = "The Distribution of Snowfall in New York") +
+  theme(legend.position = "none")
+```
 
 
