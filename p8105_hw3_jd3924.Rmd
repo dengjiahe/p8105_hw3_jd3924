@@ -105,7 +105,7 @@ Staying active the rest of the time.
 ```{r}
 accel_data %>%
   ggplot(aes(x = activity_min,y = amount_of_activity,color = day)) +
-  geom_line()+
+  geom_point()
   labs(
     x = "Time / Day",
     y = "Amoung of Activity",
@@ -196,11 +196,14 @@ temp_max_min =
   drop_na() %>%
   ggplot(aes(x = tmin, y = tmax)) +
   geom_smooth(se = FALSE)+
+  geom_hex(bins = 50) +
+  geom_smooth(se = FALSE)
   labs(
     title = "Maximum Temperature vs. Minimum Temperature in NY",
     x = "Minimum Temperature in degree Celcius",
     y = "Maximum Temp in degree celcius") + 
   theme(legend.position = "bottom")
+temp_max_min
 ```
 ```{r}
 snowfall_dist = 
@@ -219,7 +222,8 @@ snowfall_dist =
 library(patchwork)
 temp_max_min + snowfall_dist 
 ```
-
+From the plot on the left side is tmax vs. tmin, we can see the common temperature range for New York City.
+From the plot on the right side is the distribution of Snowfall in NY, we can see that the distribution of snowfall does not have big changes since 1981 till 2010. 
 ```{r}
 ny_noaa_df %>%
   summarize(
