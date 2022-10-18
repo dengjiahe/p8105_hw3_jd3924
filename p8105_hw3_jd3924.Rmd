@@ -197,13 +197,11 @@ temp_max_min =
   ggplot(aes(x = tmin, y = tmax)) +
   geom_smooth(se = FALSE)+
   geom_hex(bins = 50) +
-  geom_smooth(se = FALSE)
   labs(
     title = "Maximum Temperature vs. Minimum Temperature in NY",
     x = "Minimum Temperature in degree Celcius",
     y = "Maximum Temp in degree celcius") + 
   theme(legend.position = "bottom")
-temp_max_min
 ```
 ```{r}
 snowfall_dist = 
